@@ -1,0 +1,5 @@
+{
+  "name": "GhostBuster Job Auditor",
+  "description": "An AI-powered tool to detect 'Ghost Jobs'—stale, fake, or compliance-only job postings—helping job seekers focus on high-probability opportunities.",
+  "requestFramePermissions": []
+}
