@@ -1,9 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize the client
-// Note: process.env.API_KEY is injected by the environment
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export interface AuditResult {
   score: number;
   analysis: string;
@@ -14,6 +10,16 @@ export interface AuditResult {
   }[];
 }
 
+// Helper to safely get API key and initialize client
+const getAIClient = () => {
+  // Check if process is defined to avoid ReferenceError in strict browser environments
+  const apiKey = (typeof process !== 'undefined' && process.env) ? process.env.API_KEY : '';
+  if (!apiKey) {
+    console.warn("Gemini API Key is missing from process.env.API_KEY");
+  }
+  return new GoogleGenAI({ apiKey });
+};
+
 export const auditJobPost = async (
   title: string,
   company: string,
@@ -23,6 +29,7 @@ export const auditJobPost = async (
   industry: string
 ): Promise<AuditResult> => {
   
+  const ai = getAIClient();
   const model = 'gemini-2.5-flash'; // Using the recommended flash model for speed/cost efficiency
 
   const prompt = `

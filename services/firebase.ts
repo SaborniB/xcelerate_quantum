@@ -6,9 +6,10 @@ let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
 let db: Firestore | undefined;
 
-// Safe initialization that doesn't crash if config is missing
+// Safe initialization that doesn't crash if config is missing or process is undefined
 try {
-  const firebaseConfig = process.env.FIREBASE_CONFIG ? JSON.parse(process.env.FIREBASE_CONFIG) : {};
+  const envConfig = (typeof process !== 'undefined' && process.env) ? process.env.FIREBASE_CONFIG : null;
+  const firebaseConfig = envConfig ? JSON.parse(envConfig) : {};
   
   // Only initialize if we have at least a project ID or similar to avoid immediate errors
   if (Object.keys(firebaseConfig).length > 0) {
