@@ -1,8 +1,16 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize the client
-// Note: process.env.API_KEY is injected by the environment
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Lazy initialization to prevent crash on import if API key is missing
+let aiInstance: GoogleGenAI | null = null;
+
+const getAI = (): GoogleGenAI => {
+  if (!aiInstance) {
+    const key = process.env.API_KEY;
+    // Initialize even with empty key to allow app to load; specific calls will fail gracefully later
+    aiInstance = new GoogleGenAI({ apiKey: key || '' });
+  }
+  return aiInstance;
+};
 
 export interface AuditResult {
   score: number;
@@ -23,7 +31,8 @@ export const auditJobPost = async (
   industry: string
 ): Promise<AuditResult> => {
   
-  const model = 'gemini-2.5-flash'; // Using the recommended flash model for speed/cost efficiency
+  const modelName = 'gemini-2.5-flash'; // Using the recommended flash model for speed/cost efficiency
+  const ai = getAI();
 
   const prompt = `
     You are an expert HR auditor and AI risk analyst. Analyze the following job posting to determine if it is a "Ghost Job" (a fake, stale, or compliance-only listing with no intent to hire).
@@ -54,8 +63,13 @@ export const auditJobPost = async (
   `;
 
   try {
+    // Check if API key is actually available before calling
+    if (!process.env.API_KEY) {
+      throw new Error("API Key is missing. Please configure process.env.API_KEY.");
+    }
+
     const response = await ai.models.generateContent({
-      model: model,
+      model: modelName,
       contents: prompt,
       config: {
         responseMimeType: "application/json",
