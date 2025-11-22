@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Loader, AlertTriangle, Info } from 'lucide-react';
+import { Sparkles, Loader, AlertTriangle, CheckCircle, HelpCircle, Info } from 'lucide-react';
 import { auditJobPost, AuditResult } from '../services/gemini';
 
 interface Props {
@@ -51,19 +51,22 @@ const AuditForm: React.FC<Props> = ({ onAuditComplete }) => {
     };
 
     return (
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-            <div className="bg-white p-6 border-b border-gray-100">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+            <div className="bg-white p-8 border-b border-gray-100">
                 <h2 className="text-2xl font-bold flex items-center text-gray-900">
-                    <Sparkles className="w-6 h-6 mr-2 text-indigo-600" /> New Job Audit
+                    <div className="p-3 bg-indigo-50 rounded-xl mr-4">
+                        <Sparkles className="w-6 h-6 text-indigo-600" />
+                    </div>
+                    New Job Audit
                 </h2>
-                <p className="text-gray-500 mt-1">
+                <p className="text-gray-500 mt-2 ml-1">
                     Paste job details below to uncover hidden red flags and calculate the Ghost Score.
                 </p>
             </div>
             
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
                 {error && (
-                    <div className="bg-rose-50 text-rose-700 px-4 py-3 rounded-lg flex items-start border border-rose-100">
+                    <div className="bg-rose-50 text-rose-700 px-4 py-3 rounded-lg flex items-start">
                         <AlertTriangle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
                         <span>{error}</span>
                     </div>
@@ -77,7 +80,7 @@ const AuditForm: React.FC<Props> = ({ onAuditComplete }) => {
                             name="title"
                             value={formData.title}
                             onChange={handleChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white text-gray-900 placeholder-gray-400"
+                            className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition focus:bg-white outline-none"
                             placeholder="e.g. Senior Product Manager"
                         />
                     </div>
@@ -88,7 +91,7 @@ const AuditForm: React.FC<Props> = ({ onAuditComplete }) => {
                             name="company"
                             value={formData.company}
                             onChange={handleChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white text-gray-900 placeholder-gray-400"
+                            className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition focus:bg-white outline-none"
                             placeholder="e.g. Acme Corp"
                         />
                     </div>
@@ -101,7 +104,7 @@ const AuditForm: React.FC<Props> = ({ onAuditComplete }) => {
                         value={formData.requirements}
                         onChange={handleChange}
                         rows={8}
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none bg-white text-gray-900 placeholder-gray-400"
+                        className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none focus:bg-white outline-none"
                         placeholder="Paste the full job description here including responsibilities and qualifications..."
                     />
                     <p className="text-xs text-gray-500 mt-2 flex items-center">
@@ -117,7 +120,7 @@ const AuditForm: React.FC<Props> = ({ onAuditComplete }) => {
                             name="location"
                             value={formData.location}
                             onChange={handleChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white text-gray-900 placeholder-gray-400"
+                            className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition focus:bg-white outline-none"
                             placeholder="e.g. Remote, New York"
                         />
                     </div>
@@ -127,7 +130,7 @@ const AuditForm: React.FC<Props> = ({ onAuditComplete }) => {
                             name="type"
                             value={formData.type}
                             onChange={handleChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white text-gray-900"
+                            className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition focus:bg-white outline-none"
                         >
                             <option>Full-time</option>
                             <option>Part-time</option>
@@ -142,7 +145,7 @@ const AuditForm: React.FC<Props> = ({ onAuditComplete }) => {
                             name="industry"
                             value={formData.industry}
                             onChange={handleChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition bg-white text-gray-900"
+                            className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition focus:bg-white outline-none"
                         >
                             <option>Technology</option>
                             <option>Finance</option>
@@ -158,7 +161,7 @@ const AuditForm: React.FC<Props> = ({ onAuditComplete }) => {
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className={`w-full py-4 rounded-xl font-bold text-lg text-white shadow-md hover:shadow-lg flex items-center justify-center transition-all transform hover:scale-[1.01] active:scale-[0.99] ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'}`}
+                    className={`w-full py-4 rounded-xl font-bold text-lg text-white shadow-lg flex items-center justify-center transition-all transform hover:scale-[1.01] active:scale-[0.99] ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'}`}
                 >
                     {isLoading ? (
                         <>

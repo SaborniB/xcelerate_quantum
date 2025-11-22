@@ -22,7 +22,7 @@ const SparklineChart: React.FC<SparklineProps> = ({ data, trend }) => {
         <LineChart data={chartData}>
           <YAxis domain={['dataMin', 'dataMax']} hide />
           <Tooltip 
-            contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e5e7eb', fontSize: '12px', color: '#1f2937', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+            contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e5e7eb', fontSize: '12px', color: '#1f2937', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
             itemStyle={{ color: strokeColor }}
             formatter={(value: number) => [`${value} posts`, 'Volume']}
             labelStyle={{ display: 'none' }}

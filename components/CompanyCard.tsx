@@ -27,9 +27,9 @@ interface Props {
 }
 
 const getRiskConfig = (score: number) => {
-    if (score < 0.3) return { color: 'text-emerald-600', bg: 'bg-emerald-500', border: 'border-emerald-500', label: 'Low Risk', icon: CheckCircle };
-    if (score < 0.6) return { color: 'text-amber-600', bg: 'bg-amber-500', border: 'border-amber-500', label: 'Moderate Risk', icon: TrendingDown };
-    return { color: 'text-rose-600', bg: 'bg-rose-500', border: 'border-rose-500', label: 'High Risk', icon: XCircle };
+    if (score < 0.3) return { color: 'text-emerald-600', bg: 'bg-emerald-600', border: 'border-emerald-200', label: 'Low Risk', icon: CheckCircle };
+    if (score < 0.6) return { color: 'text-amber-600', bg: 'bg-amber-600', border: 'border-amber-200', label: 'Moderate Risk', icon: TrendingDown };
+    return { color: 'text-rose-600', bg: 'bg-rose-600', border: 'border-rose-200', label: 'High Risk', icon: XCircle };
 };
 
 const MetricBar: React.FC<{ label: string; value: number; colorClass: string }> = ({ label, value, colorClass }) => (
@@ -49,18 +49,18 @@ const CompanyCard: React.FC<Props> = ({ company }) => {
     const RiskIcon = risk.icon;
 
     return (
-        <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
+        <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-300">
             <div className="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
                 
                 {/* Left: Identity */}
-                <div className="lg:col-span-4 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-200 pb-6 lg:pb-0 lg:pr-6">
+                <div className="lg:col-span-4 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 pb-6 lg:pb-0 lg:pr-6">
                     <div className="flex items-center space-x-4 mb-4">
-                        <div className={`w-16 h-16 rounded-lg flex items-center justify-center text-white text-2xl font-bold ${company.logoColor} shadow-lg`}>
+                        <div className={`w-16 h-16 rounded-lg flex items-center justify-center text-white text-2xl font-bold ${company.logoColor} shadow-md`}>
                             {company.name.substring(0, 2).toUpperCase()}
                         </div>
                         <div>
                             <h3 className="text-xl font-bold text-gray-900 leading-tight">{company.name}</h3>
-                            <a href={`https://${company.website}`} target="_blank" rel="noreferrer" className="text-indigo-600 text-sm hover:text-indigo-500 flex items-center mt-1">
+                            <a href={`https://${company.website}`} target="_blank" rel="noreferrer" className="text-indigo-600 text-sm hover:text-indigo-800 flex items-center mt-1">
                                 {company.website} <ExternalLink className="w-3 h-3 ml-1" />
                             </a>
                         </div>
@@ -71,7 +71,7 @@ const CompanyCard: React.FC<Props> = ({ company }) => {
                         <div className="flex items-center"><Users className="w-4 h-4 mr-2 text-gray-400" /> {company.employees} Employees</div>
                     </div>
 
-                    <div className={`mt-auto p-4 rounded-lg bg-gray-50 border ${risk.border} border-opacity-30`}>
+                    <div className={`mt-auto p-4 rounded-lg bg-gray-50 border ${risk.border} border-opacity-60`}>
                         <div className="flex items-center justify-between mb-2">
                             <span className="text-gray-500 text-xs font-bold uppercase tracking-wider">Ghost Risk Score</span>
                             <RiskIcon className={`w-5 h-5 ${risk.color}`} />
@@ -84,7 +84,7 @@ const CompanyCard: React.FC<Props> = ({ company }) => {
                 </div>
 
                 {/* Middle: Stats */}
-                <div className="lg:col-span-4 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-gray-200 pb-6 lg:pb-0 lg:pr-6">
+                <div className="lg:col-span-4 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-gray-100 pb-6 lg:pb-0 lg:pr-6">
                      <div className="space-y-4">
                         <div className="flex items-center justify-between text-sm">
                             <div className="flex items-center text-gray-600">
